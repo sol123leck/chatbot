@@ -1,62 +1,130 @@
-/* ============================================
-   SHADOW STUDIO — STYLESHEET
-   ============================================ */
+/* ============================================================
+   SHADOW STUDIO — FEUILLE DE STYLES CSS
+   ============================================================
 
-/* ---------- RESET & BASE ---------- */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+   STRUCTURE DU FICHIER (dans l'ordre) :
+   1. Reset & Base         → règles de base pour tous les navigateurs
+   2. Variables CSS        → les couleurs et valeurs réutilisables
+   3. Typographie          → tailles et polices
+   4. Utilitaires          → classes réutilisables partout (container, section...)
+   5. Boutons              → styles de tous les boutons
+   6. Navigation           → barre de menu fixe
+   7. Hero                 → section d'accueil plein écran
+   8. Services             → les 3 cartes de services
+   9. Stats                → les chiffres clés
+   10. Portfolio            → grille + filtres
+   11. Processus            → timeline verticale
+   12. Audiences            → 3 cartes clients
+   13. Contact              → formulaire
+   14. Footer               → pied de page
+   15. Responsive           → adaptations mobile/tablette
+   16. Animations           → effets d'apparition au scroll
+   ============================================================ */
+
+
+/* ============================================================
+   1. RESET & BASE
+   Remet à zéro les styles par défaut des navigateurs
+   (chaque navigateur a ses propres marges/tailles par défaut)
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box; /* padding et border inclus dans la taille totale de l'élément */
+  margin: 0;              /* supprime les marges par défaut */
+  padding: 0;             /* supprime les paddings par défaut */
+}
+
+
+/* ============================================================
+   2. VARIABLES CSS
+   Les variables commencent par -- et se lisent avec var()
+   Avantage : changer une couleur ici la change partout sur le site
+   ============================================================ */
 
 :root {
-  --bg:           #07070f;
-  --bg-surface:   #0d0d1a;
-  --bg-card:      #111122;
-  --border:       rgba(255,255,255,0.07);
-  --border-hover: rgba(255,255,255,0.15);
+  /* -- COULEURS DE FOND -- */
+  --bg:           #07070f;   /* fond principal : noir bleuté très sombre */
+  --bg-surface:   #0d0d1a;   /* fond des sections alternées, légèrement plus clair */
+  --bg-card:      #111122;   /* fond des cartes */
+  --border:       rgba(255,255,255,0.07);  /* bordure très subtile (7% d'opacité blanche) */
+  --border-hover: rgba(255,255,255,0.15);  /* bordure au survol (plus visible) */
 
-  --accent:       #7c3aed;
-  --accent-glow:  #9d5fff;
-  --accent-2:     #0ea5e9;
-  --accent-2-glow:#38bdf8;
+  /* -- COULEURS D'ACCENT (les couleurs "de marque") -- */
+  --accent:       #7c3aed;   /* violet principal */
+  --accent-glow:  #9d5fff;   /* violet plus clair pour les effets lumineux */
+  --accent-2:     #0ea5e9;   /* bleu électrique (deuxième couleur) */
+  --accent-2-glow:#38bdf8;   /* bleu clair pour les effets lumineux */
 
-  --text-primary:   #f0f0f8;
-  --text-secondary: #8888aa;
-  --text-muted:     #55556a;
+  /* -- COULEURS DE TEXTE -- */
+  --text-primary:   #f0f0f8;  /* texte principal : blanc légèrement bleuté */
+  --text-secondary: #8888aa;  /* texte secondaire : gris bleuté */
+  --text-muted:     #55556a;  /* texte discret : gris foncé */
 
-  --font-body:    'Inter', sans-serif;
-  --font-display: 'Space Grotesk', sans-serif;
+  /* -- POLICES -- */
+  --font-body:    'Inter', sans-serif;          /* pour les paragraphes */
+  --font-display: 'Space Grotesk', sans-serif;  /* pour les titres */
 
-  --radius:    12px;
-  --radius-lg: 20px;
-  --gap:       clamp(1.5rem, 4vw, 3rem);
-  --section-py: clamp(5rem, 10vw, 9rem);
+  /* -- ESPACEMENTS -- */
+  --radius:    12px;  /* arrondi des coins des petits éléments */
+  --radius-lg: 20px;  /* arrondi des coins des grandes cartes */
+
+  /* clamp(min, préféré, max) = valeur responsive qui s'adapte à la taille de l'écran */
+  --gap:        clamp(1.5rem, 4vw, 3rem);       /* espacement entre éléments */
+  --section-py: clamp(5rem, 10vw, 9rem);        /* padding vertical des sections */
 }
 
-html { scroll-behavior: smooth; font-size: 16px; }
+
+/* ============================================================
+   3. TYPOGRAPHIE & RÉGLAGES GLOBAUX
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth; /* défilement fluide quand on clique sur un lien ancre (#) */
+  font-size: 16px;          /* taille de base : 1rem = 16px */
+}
 
 body {
-  background: var(--bg);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  line-height: 1.6;
-  overflow-x: hidden;
+  background: var(--bg);          /* fond sombre */
+  color: var(--text-primary);     /* couleur de texte par défaut */
+  font-family: var(--font-body);  /* police par défaut */
+  line-height: 1.6;               /* hauteur de ligne (espacement entre les lignes de texte) */
+  overflow-x: hidden;             /* empêche le défilement horizontal non voulu */
 }
 
+/* Rend les images/vidéos/svg responsives par défaut */
 img, video, svg { display: block; max-width: 100%; }
+
+/* Supprime le soulignement des liens par défaut */
 a { color: inherit; text-decoration: none; }
+
+/* Supprime les puces des listes */
 ul { list-style: none; }
+
+/* Réinitialise les boutons */
 button { cursor: pointer; border: none; background: none; font: inherit; }
 
-/* ---------- TYPOGRAPHY ---------- */
-h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
-
-/* ---------- UTILITIES ---------- */
-.container {
-  max-width: 1220px;
-  margin-inline: auto;
-  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+/* Les titres utilisent la police d'affichage */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.15; /* les titres sont plus serrés que le texte courant */
 }
 
+
+/* ============================================================
+   4. UTILITAIRES — Classes réutilisables
+   ============================================================ */
+
+/* Centre le contenu et limite sa largeur maximale */
+.container {
+  max-width: 1220px;                               /* pas plus large que ça */
+  margin-inline: auto;                             /* centré horizontalement */
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);    /* marges internes latérales */
+}
+
+/* Espacement vertical standard pour chaque grande section */
 .section { padding-block: var(--section-py); }
 
+/* En-tête de section centré (eyebrow + titre + description) */
 .section__header {
   text-align: center;
   max-width: 680px;
@@ -64,53 +132,64 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   margin-bottom: clamp(3rem, 6vw, 5rem);
 }
 
+/* Petit texte coloré AU-DESSUS du titre principal */
 .section__eyebrow {
   font-size: .75rem;
   font-weight: 600;
-  letter-spacing: .2em;
+  letter-spacing: .2em;    /* espacement entre les lettres */
   text-transform: uppercase;
   color: var(--accent-glow);
   margin-bottom: .75rem;
 }
 
+/* Titre principal de section */
 .section__title {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2rem, 4vw, 3rem); /* responsive : entre 2rem et 3rem selon l'écran */
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
+/* Description sous le titre */
 .section__desc {
   color: var(--text-secondary);
   font-size: 1.05rem;
   line-height: 1.7;
 }
 
-/* ---------- BUTTONS ---------- */
+
+/* ============================================================
+   5. BOUTONS
+   Système de boutons avec variantes (BEM : .btn--variante)
+   ============================================================ */
+
+/* Style de base commun à tous les boutons */
 .btn {
-  display: inline-flex;
+  display: inline-flex;       /* flex pour aligner texte + icône */
   align-items: center;
-  gap: .5rem;
+  gap: .5rem;                 /* espace entre texte et icône */
   padding: .75rem 1.75rem;
   border-radius: 8px;
   font-size: .95rem;
   font-weight: 600;
   font-family: var(--font-display);
-  transition: all .25s ease;
-  white-space: nowrap;
+  transition: all .25s ease;  /* animation fluide sur toutes les propriétés */
+  white-space: nowrap;        /* empêche le texte de se couper sur 2 lignes */
 }
 
+/* Bouton principal — rempli violet */
 .btn--primary {
   background: var(--accent);
   color: #fff;
-  box-shadow: 0 0 20px rgba(124,58,237,.35);
+  box-shadow: 0 0 20px rgba(124,58,237,.35); /* halo lumineux violet */
 }
 .btn--primary:hover {
-  background: var(--accent-glow);
-  box-shadow: 0 0 40px rgba(124,58,237,.6);
-  transform: translateY(-1px);
+  background: var(--accent-glow);             /* violet plus clair au survol */
+  box-shadow: 0 0 40px rgba(124,58,237,.6);   /* halo plus intense */
+  transform: translateY(-1px);                /* légère élévation */
 }
 
+/* Bouton secondaire — contour avec bordure */
 .btn--outline {
   border: 1px solid var(--border-hover);
   color: var(--text-primary);
@@ -118,9 +197,10 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
 .btn--outline:hover {
   border-color: var(--accent);
   color: var(--accent-glow);
-  background: rgba(124,58,237,.08);
+  background: rgba(124,58,237,.08); /* fond légèrement violet */
 }
 
+/* Bouton fantôme — très discret */
 .btn--ghost {
   color: var(--text-secondary);
   border: 1px solid var(--border);
@@ -130,34 +210,40 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   border-color: var(--border-hover);
 }
 
+/* Modificateur pleine largeur (pour le bouton du formulaire) */
 .btn--full { width: 100%; justify-content: center; }
 
-/* ============================================
-   NAVIGATION
-   ============================================ */
+
+/* ============================================================
+   6. NAVIGATION
+   Barre fixe en haut, devient opaque au scroll
+   ============================================================ */
+
 .nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
+  position: fixed;           /* reste collée en haut même quand on scroll */
+  top: 0; left: 0; right: 0; /* s'étend sur toute la largeur */
+  z-index: 100;              /* par-dessus tout le reste (z-index élevé = devant) */
   padding-block: 1.25rem;
   transition: background .3s, backdrop-filter .3s, border-bottom .3s;
 }
 
+/* Classe ajoutée par JavaScript quand on scroll vers le bas */
 .nav.scrolled {
-  background: rgba(7,7,15,.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  background: rgba(7,7,15,.85);   /* fond semi-transparent */
+  backdrop-filter: blur(20px);    /* flou de l'arrière-plan (effet verre dépoli) */
+  border-bottom: 1px solid var(--border); /* ligne subtile en bas */
 }
 
 .nav__container {
   max-width: 1220px;
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 5vw, 2.5rem);
-  display: flex;
+  display: flex;              /* aligne logo + liens + bouton sur une ligne */
   align-items: center;
   gap: 2rem;
 }
 
+/* Logo */
 .nav__logo {
   font-family: var(--font-display);
   font-size: 1.4rem;
@@ -166,14 +252,14 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   color: var(--text-primary);
 }
 
-.nav__logo-shadow {
-  color: var(--accent-glow);
-}
+/* Le "S" du logo en violet */
+.nav__logo-shadow { color: var(--accent-glow); }
 
+/* Liste des liens de navigation */
 .nav__links {
   display: flex;
   gap: 2rem;
-  margin-inline-start: auto;
+  margin-inline-start: auto; /* pousse les liens vers la droite */
 }
 
 .nav__link {
@@ -186,8 +272,9 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
 
 .nav__cta { margin-inline-start: 1rem; padding: .6rem 1.25rem; }
 
+/* Bouton hamburger (3 traits) — visible uniquement sur mobile */
 .nav__burger {
-  display: none;
+  display: none;       /* caché par défaut, affiché en CSS responsive */
   flex-direction: column;
   gap: 5px;
   margin-inline-start: auto;
@@ -199,48 +286,53 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   transition: all .3s;
 }
 
-/* ============================================
-   HERO
-   ============================================ */
+
+/* ============================================================
+   7. HERO — Section d'accueil plein écran
+   ============================================================ */
+
 .hero {
-  position: relative;
-  min-height: 100svh;
+  position: relative;   /* nécessaire pour positionner le canvas en absolu */
+  min-height: 100svh;   /* 100% de la hauteur visible de l'écran (svh = safe viewport height) */
   display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  align-items: center;  /* centre verticalement */
+  justify-content: center; /* centre horizontalement */
+  overflow: hidden;     /* cache ce qui dépasse */
 }
 
+/* Le canvas Three.js se place en fond, derrière tout le reste */
 #heroCanvas {
   position: absolute;
-  inset: 0;
+  inset: 0;           /* inset: 0 = top:0, right:0, bottom:0, left:0 en une ligne */
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 0;         /* derrière le contenu (z-index 0 < z-index 2 du contenu) */
 }
 
 .hero__content {
-  position: relative;
-  z-index: 2;
+  position: relative;  /* pour être au-dessus du canvas */
+  z-index: 2;          /* par-dessus le canvas (z-index 0) */
   text-align: center;
   padding-inline: clamp(1.25rem, 5vw, 2.5rem);
   max-width: 900px;
 }
 
+/* Badge "Studio Créatif Hybride" arrondi */
 .hero__eyebrow {
   display: inline-block;
   font-size: .75rem;
   font-weight: 600;
   letter-spacing: .25em;
   text-transform: uppercase;
-  color: var(--accent-2-glow);
+  color: var(--accent-2-glow);        /* bleu électrique */
   margin-bottom: 1.5rem;
   padding: .4rem 1rem;
-  border: 1px solid rgba(14,165,233,.3);
-  border-radius: 100px;
-  background: rgba(14,165,233,.05);
+  border: 1px solid rgba(14,165,233,.3);  /* bordure bleue subtile */
+  border-radius: 100px;                    /* complètement arrondi = pilule */
+  background: rgba(14,165,233,.05);        /* fond bleu transparent */
 }
 
+/* Conteneur du titre (SHADOW + sous-titre) */
 .hero__title {
   display: flex;
   flex-direction: column;
@@ -248,22 +340,27 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   margin-bottom: 1.75rem;
 }
 
+/* "SHADOW" en énorme avec dégradé de couleurs */
 .hero__title-main {
-  font-size: clamp(4rem, 14vw, 10rem);
+  font-size: clamp(4rem, 14vw, 10rem); /* responsive : très grand */
   font-weight: 900;
   letter-spacing: -.02em;
   line-height: .95;
+
+  /* Dégradé de texte : blanc → violet → bleu */
   background: linear-gradient(135deg, #fff 30%, var(--accent-glow) 70%, var(--accent-2-glow) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 0 60px rgba(124,58,237,.4));
+  -webkit-background-clip: text;        /* clip le fond sur le texte */
+  -webkit-text-fill-color: transparent; /* rend le texte transparent pour voir le fond */
+  background-clip: text;               /* version standard (sans préfixe webkit) */
+
+  filter: drop-shadow(0 0 60px rgba(124,58,237,.4)); /* halo lumineux violet */
 }
 
+/* "Design. 3D. Game." en petit sous le titre */
 .hero__title-sub {
   font-size: clamp(.9rem, 2.5vw, 1.3rem);
   font-weight: 300;
-  letter-spacing: .35em;
+  letter-spacing: .35em;  /* très espacé = look design */
   text-transform: uppercase;
   color: var(--text-secondary);
   margin-top: .5rem;
@@ -282,14 +379,15 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   display: flex;
   gap: 1rem;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* si les boutons ne tiennent pas côte à côte, ils passent à la ligne */
 }
 
+/* Indicateur de scroll en bas de l'écran */
 .hero__scroll-hint {
   position: absolute;
   bottom: 2.5rem;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%); /* centrage horizontal précis */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -301,75 +399,85 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   text-transform: uppercase;
 }
 
+/* La ligne animée qui pulse vers le bas */
 .hero__scroll-line {
   width: 1px;
   height: 50px;
   background: linear-gradient(to bottom, var(--accent), transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
+  animation: scrollPulse 2s ease-in-out infinite; /* animation en boucle */
 }
 
+/* Keyframes = définition de l'animation image par image */
 @keyframes scrollPulse {
-  0%, 100% { opacity: .3; transform: scaleY(1); }
-  50% { opacity: 1; transform: scaleY(1.1); }
+  0%, 100% { opacity: .3; transform: scaleY(1); }    /* début et fin : discret */
+  50% { opacity: 1; transform: scaleY(1.1); }         /* milieu : visible et légèrement agrandi */
 }
 
-/* ============================================
-   SERVICES
-   ============================================ */
+
+/* ============================================================
+   8. SERVICES — Les 3 cartes d'activité
+   ============================================================ */
+
+/* Grille à 3 colonnes égales */
 .services__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* 3 colonnes de taille égale */
   gap: 1.5rem;
 }
 
+/* Style de base d'une carte */
 .service-card {
-  position: relative;
+  position: relative;              /* pour positionner l'effet glow en absolu */
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg); /* grands coins arrondis */
   padding: 2.25rem;
-  overflow: hidden;
+  overflow: hidden;                /* l'effet glow ne déborde pas de la carte */
   transition: border-color .3s, transform .3s;
 }
-
 .service-card:hover {
   border-color: var(--border-hover);
-  transform: translateY(-4px);
+  transform: translateY(-4px); /* monte légèrement au survol */
 }
 
+/* La carte 3D est mise en avant (fond légèrement violet) */
 .service-card--featured {
   border-color: rgba(124,58,237,.4);
   background: linear-gradient(135deg, rgba(124,58,237,.08) 0%, var(--bg-card) 60%);
 }
-
 .service-card--featured:hover { border-color: rgba(124,58,237,.7); }
 
+/* Cercle flou en fond qui apparaît au survol */
 .service-card__glow {
   position: absolute;
   width: 200px; height: 200px;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0;
+  filter: blur(80px);  /* flou extrême = halo diffus */
+  opacity: 0;          /* invisible par défaut */
   transition: opacity .4s;
-  pointer-events: none;
+  pointer-events: none; /* ne bloque pas les clics */
   top: -50px; right: -50px;
 }
 
-.service-card--2d .service-card__glow  { background: var(--accent-2); }
-.service-card--3d .service-card__glow  { background: var(--accent); }
-.service-card--game .service-card__glow { background: #ec4899; }
+/* Couleurs des halos selon la carte */
+.service-card--2d  .service-card__glow  { background: var(--accent-2); }  /* bleu */
+.service-card--3d  .service-card__glow  { background: var(--accent); }    /* violet */
+.service-card--game .service-card__glow { background: #ec4899; }           /* rose */
 
+/* Au survol, le halo devient visible */
 .service-card:hover .service-card__glow { opacity: .12; }
 
+/* Icône SVG de la carte */
 .service-card__icon {
   width: 48px; height: 48px;
   margin-bottom: 1.25rem;
-  color: var(--accent-glow);
+  color: var(--accent-glow); /* couleur par défaut = violet */
 }
-
-.service-card--2d  .service-card__icon { color: var(--accent-2-glow); }
+/* Couleurs différentes selon le pôle */
+.service-card--2d  .service-card__icon  { color: var(--accent-2-glow); }
 .service-card--game .service-card__icon { color: #f472b6; }
 
+/* "Pôle 01" etc. */
 .service-card__badge {
   display: inline-block;
   font-size: .7rem;
@@ -379,8 +487,7 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   color: var(--text-muted);
   margin-bottom: .6rem;
 }
-
-.service-card__badge--accent { color: var(--accent-glow); }
+.service-card__badge--accent { color: var(--accent-glow); } /* version violette */
 
 .service-card__title {
   font-size: 1.5rem;
@@ -395,58 +502,62 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   margin-bottom: 1.5rem;
 }
 
+/* Liste des prestations avec un point coloré à la place des puces */
 .service-card__list {
   display: flex;
   flex-direction: column;
   gap: .5rem;
   margin-bottom: 1.5rem;
 }
-
 .service-card__list li {
   font-size: .875rem;
   color: var(--text-secondary);
   padding-left: 1.25rem;
-  position: relative;
+  position: relative; /* pour le pseudo-élément ::before */
 }
-
+/* Petit rond coloré devant chaque item */
 .service-card__list li::before {
-  content: '';
+  content: '';          /* nécessaire pour afficher un pseudo-élément */
   position: absolute;
   left: 0; top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%); /* centré verticalement */
   width: 5px; height: 5px;
-  border-radius: 50%;
+  border-radius: 50%;   /* cercle parfait */
   background: var(--accent);
 }
-
+/* Couleurs différentes des ronds selon le pôle */
 .service-card--2d  .service-card__list li::before { background: var(--accent-2); }
 .service-card--game .service-card__list li::before { background: #ec4899; }
 
+/* Rangée de tags d'outils (Blender, Photoshop...) */
 .service-card__tools {
   display: flex;
   flex-wrap: wrap;
   gap: .5rem;
 }
-
 .tool-tag {
   font-size: .75rem;
   font-weight: 600;
   padding: .3rem .75rem;
-  border-radius: 100px;
+  border-radius: 100px; /* pilule */
   border: 1px solid var(--border);
   color: var(--text-muted);
   background: var(--bg-surface);
 }
 
-/* ============================================
-   STATS
-   ============================================ */
+
+/* ============================================================
+   9. STATS — Chiffres clés
+   ============================================================ */
+
 .stats {
+  /* Bande de couleur subtile entre les sections */
   background: linear-gradient(90deg, rgba(124,58,237,.06) 0%, rgba(14,165,233,.06) 100%);
-  border-block: 1px solid var(--border);
+  border-block: 1px solid var(--border); /* bordures haut et bas */
   padding-block: 4rem;
 }
 
+/* 4 colonnes égales */
 .stats__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -454,16 +565,19 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   text-align: center;
 }
 
+/* Le grand chiffre avec dégradé */
 .stat-item__number {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 800;
+  /* Dégradé violet → bleu sur le texte */
   background: linear-gradient(135deg, var(--accent-glow), var(--accent-2-glow));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+/* Le suffixe (+, h, %) */
 .stat-item__suffix {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 3vw, 2rem);
@@ -479,9 +593,12 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   letter-spacing: .1em;
 }
 
-/* ============================================
-   PORTFOLIO
-   ============================================ */
+
+/* ============================================================
+   10. PORTFOLIO — Grille de projets avec filtres
+   ============================================================ */
+
+/* Rangée de boutons de filtre */
 .portfolio__filters {
   display: flex;
   justify-content: center;
@@ -499,12 +616,12 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   color: var(--text-secondary);
   transition: all .2s;
 }
-
 .filter-btn:hover {
   border-color: var(--border-hover);
   color: var(--text-primary);
 }
 
+/* Bouton actif (sélectionné) */
 .filter-btn--active {
   background: var(--accent);
   border-color: var(--accent);
@@ -512,16 +629,23 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   box-shadow: 0 0 20px rgba(124,58,237,.35);
 }
 
+/* Grille des projets */
 .portfolio__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 280px;
+  grid-auto-rows: 280px; /* hauteur fixe de chaque rangée */
   gap: 1.25rem;
 }
 
-.portfolio-item { border-radius: var(--radius); overflow: hidden; }
+.portfolio-item {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+/* Projet large = occupe 2 colonnes */
 .portfolio-item--wide { grid-column: span 2; }
 
+/* La "photo" du projet (fond de couleur pour l'instant) */
 .portfolio-item__image {
   width: 100%; height: 100%;
   position: relative;
@@ -529,9 +653,14 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   transition: transform .4s ease;
 }
 
+/* Zoom léger au survol */
 .portfolio-item:hover .portfolio-item__image { transform: scale(1.03); }
 
-/* Placeholder backgrounds — replace with real images */
+/*
+   Fonds de remplacement (dégradés colorés).
+   ⚠️ À REMPLACER par de vraies images :
+   .portfolio-item__image--1 { background: url('images/projet1.jpg') center/cover; }
+*/
 .portfolio-item__image--1 { background: linear-gradient(135deg, #1a0533 0%, #3d0070 40%, #7c3aed 100%); }
 .portfolio-item__image--2 { background: linear-gradient(135deg, #051828 0%, #0a3050 40%, #0ea5e9 100%); }
 .portfolio-item__image--3 { background: linear-gradient(135deg, #0f1a0a 0%, #1a3d10 40%, #22c55e 100%); }
@@ -539,31 +668,34 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
 .portfolio-item__image--5 { background: linear-gradient(135deg, #1a0a1a 0%, #3d1040 40%, #ec4899 100%); }
 .portfolio-item__image--6 { background: linear-gradient(135deg, #0a0a1a 0%, #10103d 40%, #6366f1 100%); }
 
-/* Fake grid decoration on each card */
+/* Grille décorative en surimpression sur les images */
 .portfolio-item__image::before {
   content: '';
   position: absolute;
   inset: 0;
+  /* Quadrillage avec deux dégradés linéaires superposés */
   background-image:
     linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
+/* Informations du projet qui apparaissent au survol */
 .portfolio-item__overlay {
   position: absolute;
   inset: 0;
+  /* Dégradé sombre depuis le bas pour que le texte soit lisible */
   background: linear-gradient(to top, rgba(7,7,15,.95) 0%, rgba(7,7,15,.4) 50%, transparent 100%);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-end; /* texte collé en bas */
   padding: 1.5rem;
-  opacity: 0;
+  opacity: 0;               /* caché par défaut */
   transition: opacity .3s;
 }
+.portfolio-item:hover .portfolio-item__overlay { opacity: 1; } /* visible au survol */
 
-.portfolio-item:hover .portfolio-item__overlay { opacity: 1; }
-
+/* Catégorie (ex: "3D & Immersif") */
 .portfolio-item__cat {
   font-size: .7rem;
   font-weight: 700;
@@ -584,57 +716,59 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   color: var(--text-secondary);
 }
 
-.portfolio-item--hidden {
-  display: none;
-}
+/* Classe ajoutée par JavaScript pour masquer les items filtrés */
+.portfolio-item--hidden { display: none; }
 
-/* ============================================
-   PROCESS
-   ============================================ */
-.process { background: var(--bg-surface); }
+
+/* ============================================================
+   11. PROCESSUS — Timeline verticale des 5 étapes
+   ============================================================ */
+
+.process { background: var(--bg-surface); } /* fond légèrement différent */
 
 .process__timeline {
   display: flex;
   flex-direction: column;
-  gap: 0;
   max-width: 800px;
   margin-inline: auto;
 }
 
+/* Chaque étape utilise une grille à 3 colonnes :
+   [numéro] [ligne de connexion] [contenu] */
 .process-step {
   display: grid;
-  grid-template-columns: 60px 1px 1fr;
+  grid-template-columns: 60px 1px 1fr; /* colonne fixe | ligne | contenu flexible */
   gap: 0 1.5rem;
   align-items: start;
   position: relative;
-  padding-bottom: 3rem;
+  padding-bottom: 3rem; /* espace entre les étapes */
 }
+.process-step:last-child { padding-bottom: 0; } /* pas d'espace après la dernière */
 
-.process-step:last-child { padding-bottom: 0; }
-
+/* Cercle avec le numéro */
 .process-step__number {
   width: 56px; height: 56px;
   border-radius: 50%;
   border: 1px solid var(--border);
   background: var(--bg-card);
   display: grid;
-  place-items: center;
+  place-items: center; /* centre parfaitement le texte */
   font-family: var(--font-display);
   font-size: .75rem;
   font-weight: 700;
   color: var(--accent-glow);
   letter-spacing: .05em;
-  flex-shrink: 0;
+  flex-shrink: 0; /* ne rétrécit pas */
 }
 
+/* La ligne verticale entre les étapes */
 .process-step__connector {
   width: 1px;
   background: linear-gradient(to bottom, var(--border-hover), var(--border));
-  margin-top: 56px;
-  height: calc(100% - 56px);
+  margin-top: 56px;                   /* commence après le cercle */
+  height: calc(100% - 56px);         /* s'arrête juste avant l'étape suivante */
 }
-
-.process-step:last-child .process-step__connector { display: none; }
+.process-step:last-child .process-step__connector { display: none; } /* pas de ligne après la dernière */
 
 .process-step__content {
   padding-top: .75rem;
@@ -659,9 +793,11 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   line-height: 1.7;
 }
 
-/* ============================================
-   AUDIENCES
-   ============================================ */
+
+/* ============================================================
+   12. AUDIENCES — 3 cartes clients cibles
+   ============================================================ */
+
 .audiences__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -675,7 +811,6 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   padding: 2rem;
   transition: border-color .3s, transform .3s;
 }
-
 .audience-card:hover {
   border-color: var(--border-hover);
   transform: translateY(-3px);
@@ -699,12 +834,15 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   line-height: 1.7;
 }
 
-/* ============================================
-   CONTACT
-   ============================================ */
+
+/* ============================================================
+   13. CONTACT — Formulaire de contact
+   ============================================================ */
+
+/* Deux colonnes : infos | formulaire */
 .contact__inner {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1fr 1.2fr; /* la droite est un peu plus large */
   gap: 5rem;
   align-items: start;
 }
@@ -716,13 +854,13 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   line-height: 1.7;
 }
 
+/* Lignes email / délai de réponse */
 .contact__details {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-bottom: 2rem;
 }
-
 .contact__detail {
   display: flex;
   align-items: center;
@@ -730,14 +868,10 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   color: var(--text-secondary);
   font-size: .9rem;
 }
-
 .contact__detail svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--accent-glow); }
 
-.contact__socials {
-  display: flex;
-  gap: .75rem;
-}
-
+/* Boutons réseaux sociaux */
+.contact__socials { display: flex; gap: .75rem; }
 .social-link {
   width: 40px; height: 40px;
   border: 1px solid var(--border);
@@ -749,14 +883,13 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   color: var(--text-muted);
   transition: all .2s;
 }
-
 .social-link:hover {
   border-color: var(--accent);
   color: var(--accent-glow);
   background: rgba(124,58,237,.1);
 }
 
-/* Form */
+/* La boîte du formulaire */
 .contact__form {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -764,9 +897,10 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   padding: 2.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.25rem; /* espace entre chaque groupe de champ */
 }
 
+/* Groupe label + input */
 .form-group { display: flex; flex-direction: column; gap: .4rem; }
 
 .form-label {
@@ -777,6 +911,7 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   text-transform: uppercase;
 }
 
+/* Style commun à tous les champs de saisie */
 .form-input {
   background: var(--bg-surface);
   border: 1px solid var(--border);
@@ -786,38 +921,40 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   font-family: var(--font-body);
   font-size: .95rem;
   transition: border-color .2s, box-shadow .2s;
-  outline: none;
+  outline: none; /* supprime le contour bleu par défaut du navigateur */
 }
-
+/* Quand le champ est actif (focus) */
 .form-input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(124,58,237,.15);
+  box-shadow: 0 0 0 3px rgba(124,58,237,.15); /* halo violet discret */
 }
+.form-input::placeholder { color: var(--text-muted); } /* couleur du texte d'exemple */
 
-.form-input::placeholder { color: var(--text-muted); }
-
+/* Style spécifique pour le <select> (menu déroulant) */
 .form-select {
-  appearance: none;
+  appearance: none; /* supprime le style natif du navigateur */
+  /* Icône flèche personnalisée encodée en SVG dans l'URL */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2355556a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 16px;
   cursor: pointer;
 }
+.form-select option { background: var(--bg-card); } /* fond sombre pour les options */
 
-.form-select option { background: var(--bg-card); }
-
+/* Zone de texte multiligne */
 .form-textarea {
   min-height: 130px;
-  resize: vertical;
+  resize: vertical; /* l'utilisateur peut agrandir verticalement seulement */
   line-height: 1.6;
 }
 
+/* Message de succès après envoi (caché par défaut) */
 .form-success {
-  display: none;
+  display: none; /* caché */
   align-items: center;
   gap: .75rem;
-  color: #22c55e;
+  color: #22c55e; /* vert */
   font-size: .9rem;
   font-weight: 600;
   padding: 1rem;
@@ -825,13 +962,15 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   border: 1px solid rgba(34,197,94,.2);
   border-radius: 8px;
 }
-
 .form-success svg { width: 20px; flex-shrink: 0; }
+/* JavaScript ajoute cette classe pour l'afficher */
 .form-success.visible { display: flex; }
 
-/* ============================================
-   FOOTER
-   ============================================ */
+
+/* ============================================================
+   14. FOOTER — Pied de page
+   ============================================================ */
+
 .footer {
   background: var(--bg-surface);
   border-top: 1px solid var(--border);
@@ -844,22 +983,15 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   margin-bottom: 3rem;
 }
 
-.footer__brand {
-  flex: 1;
-}
-
+.footer__brand { flex: 1; } /* prend tout l'espace disponible */
 .footer__logo { margin-bottom: .75rem; }
-
 .footer__brand p {
   color: var(--text-muted);
   font-size: .875rem;
   line-height: 1.6;
 }
 
-.footer__links {
-  display: flex;
-  gap: 4rem;
-}
+.footer__links { display: flex; gap: 4rem; }
 
 .footer__col h4 {
   font-size: .75rem;
@@ -869,21 +1001,19 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   color: var(--text-muted);
   margin-bottom: 1rem;
 }
-
 .footer__col ul {
   display: flex;
   flex-direction: column;
   gap: .6rem;
 }
-
 .footer__col li a {
   font-size: .875rem;
   color: var(--text-secondary);
   transition: color .2s;
 }
-
 .footer__col li a:hover { color: var(--text-primary); }
 
+/* Ligne de copyright */
 .footer__bottom {
   border-top: 1px solid var(--border);
   padding-top: 2rem;
@@ -894,62 +1024,93 @@ h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
   color: var(--text-muted);
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
+
+/* ============================================================
+   15. RESPONSIVE — Adaptations selon la taille de l'écran
+   Les @media queries s'activent quand l'écran est plus petit
+   que la valeur indiquée (max-width)
+   ============================================================ */
+
+/* ── TABLETTE (moins de 1024px) ── */
 @media (max-width: 1024px) {
+  /* Services : 2 colonnes au lieu de 3 */
   .services__grid { grid-template-columns: 1fr 1fr; }
+  /* La carte 3D (featured) prend toute la largeur */
   .service-card--3d { grid-column: span 2; }
+
+  /* Stats : 2 colonnes au lieu de 4 */
   .stats__grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Audiences : 1 colonne */
   .audiences__grid { grid-template-columns: 1fr; }
+
+  /* Contact : 1 colonne */
   .contact__inner { grid-template-columns: 1fr; gap: 3rem; }
+
+  /* Footer : colonne unique */
   .footer__top { flex-direction: column; gap: 2.5rem; }
 }
 
+/* ── MOBILE (moins de 768px) ── */
 @media (max-width: 768px) {
+  /* Cache les liens nav et le bouton CTA, affiche le hamburger */
   .nav__links, .nav__cta { display: none; }
   .nav__burger { display: flex; }
 
+  /* Services : 1 seule colonne */
   .services__grid { grid-template-columns: 1fr; }
-  .service-card--3d { grid-column: auto; }
+  .service-card--3d { grid-column: auto; } /* annule le span 2 */
 
+  /* Portfolio : 2 colonnes plus petites */
   .portfolio__grid {
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: 200px;
   }
   .portfolio-item--wide { grid-column: span 2; }
 
+  /* Stats : 2 colonnes */
   .stats__grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 
+  /* Footer : liens en colonne */
   .footer__links { flex-direction: column; gap: 2rem; }
   .footer__bottom { flex-direction: column; gap: .5rem; text-align: center; }
 }
 
+/* ── PETIT MOBILE (moins de 480px) ── */
 @media (max-width: 480px) {
+  /* Portfolio : 1 seule colonne */
   .portfolio__grid {
     grid-template-columns: 1fr;
     grid-auto-rows: 220px;
   }
   .portfolio-item--wide { grid-column: auto; }
 
+  /* Boutons hero en colonne */
   .hero__actions { flex-direction: column; align-items: center; }
   .hero__actions .btn { width: 100%; justify-content: center; }
 }
 
-/* ============================================
-   ANIMATIONS
-   ============================================ */
+
+/* ============================================================
+   16. ANIMATIONS — Apparition au scroll
+   Les éléments arrivent de bas en haut quand ils entrent dans le champ de vision
+   JavaScript (IntersectionObserver) ajoute la classe "visible" au bon moment
+   ============================================================ */
+
+/* État initial : invisible et décalé vers le bas */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity .7s ease, transform .7s ease;
 }
 
+/* État final : visible à sa position normale */
 .reveal.visible {
   opacity: 1;
-  transform: none;
+  transform: none; /* annule le translateY */
 }
 
+/* Délais pour créer un effet en cascade (les éléments arrivent un par un) */
 .reveal-delay-1 { transition-delay: .1s; }
 .reveal-delay-2 { transition-delay: .2s; }
 .reveal-delay-3 { transition-delay: .3s; }
