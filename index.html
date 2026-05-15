@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shadow Studio — Design × 3D × Game Dev</title>
+  <meta name="description" content="Shadow est un studio créatif hybride spécialisé dans la production visuelle de haute performance : identités visuelles, 3D immersif, et développement de jeux vidéo." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="#hero" class="nav__logo">
+        <span class="nav__logo-shadow">S</span>HADOW
+      </a>
+      <ul class="nav__links">
+        <li><a href="#services" class="nav__link">Services</a></li>
+        <li><a href="#portfolio" class="nav__link">Portfolio</a></li>
+        <li><a href="#process" class="nav__link">Processus</a></li>
+        <li><a href="#contact" class="nav__link">Contact</a></li>
+      </ul>
+      <a href="#contact" class="btn btn--outline nav__cta">Démarrer un projet</a>
+      <button class="nav__burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero__content">
+      <p class="hero__eyebrow">Studio Créatif Hybride</p>
+      <h1 class="hero__title">
+        <span class="hero__title-main">SHADOW</span>
+        <span class="hero__title-sub">Design. 3D. Game.</span>
+      </h1>
+      <p class="hero__desc">
+        Nous bridgeons l'écart entre le design traditionnel et les technologies immersives. De l'identité visuelle au rendu 3D ultra-réaliste, jusqu'aux environnements temps réel.
+      </p>
+      <div class="hero__actions">
+        <a href="#portfolio" class="btn btn--primary">Voir le Portfolio</a>
+        <a href="#services" class="btn btn--ghost">Explorer nos services</a>
+      </div>
+    </div>
+    <div class="hero__scroll-hint">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="section services" id="services">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Ce que nous faisons</p>
+        <h2 class="section__title">Deux pôles d'expertise,<br/>une vision unifiée</h2>
+        <p class="section__desc">Chaque projet est une production visuelle de haute performance, conçue pour marquer les esprits de vos audiences.</p>
+      </div>
+
+      <div class="services__grid">
+
+        <!-- Pole 2D -->
+        <div class="service-card service-card--2d" data-index="01">
+          <div class="service-card__glow"></div>
+          <div class="service-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2"/>
+              <path d="M8 24H16M32 24H40M24 8V16M24 32V40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="service-card__badge">Pôle 01</div>
+          <h3 class="service-card__title">Infographie 2D</h3>
+          <p class="service-card__desc">Création d'identités visuelles percutantes, logos, et supports de communication. Chaque élément est pensé pour une cohérence de marque maximale.</p>
+          <ul class="service-card__list">
+            <li>Identité visuelle & Branding</li>
+            <li>Logo Design</li>
+            <li>Supports de communication</li>
+            <li>Charte graphique</li>
+          </ul>
+          <div class="service-card__tools">
+            <span class="tool-tag">Photoshop</span>
+            <span class="tool-tag">Illustrator</span>
+          </div>
+        </div>
+
+        <!-- Pole 3D -->
+        <div class="service-card service-card--3d service-card--featured" data-index="02">
+          <div class="service-card__glow"></div>
+          <div class="service-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 4L44 16V32L24 44L4 32V16L24 4Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M24 4V44M4 16L44 16M4 32L44 32" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+              <circle cx="24" cy="24" r="3" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="service-card__badge service-card__badge--accent">Pôle 02</div>
+          <h3 class="service-card__title">3D & Immersif</h3>
+          <p class="service-card__desc">Modélisation, animation et rendu de haute fidélité. Du produit pour la publicité à la visualisation architecturale, nous donnons vie à vos projets avant leur existence physique.</p>
+          <ul class="service-card__list">
+            <li>Product Marketing 3D</li>
+            <li>Visualisation architecturale</li>
+            <li>Animation & VFX</li>
+            <li>Pre-event 3D</li>
+          </ul>
+          <div class="service-card__tools">
+            <span class="tool-tag">Blender</span>
+            <span class="tool-tag">Cycles</span>
+            <span class="tool-tag">EEVEE</span>
+          </div>
+        </div>
+
+        <!-- Pole Game Dev -->
+        <div class="service-card service-card--game" data-index="03">
+          <div class="service-card__glow"></div>
+          <div class="service-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="12" width="40" height="28" rx="6" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 26H24M20 22V30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="32" cy="24" r="2" fill="currentColor"/>
+              <circle cx="28" cy="28" r="2" fill="currentColor"/>
+              <path d="M18 8H30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="service-card__badge">Pôle 03</div>
+          <h3 class="service-card__title">Game Development</h3>
+          <p class="service-card__desc">Conception d'environnements immersifs et de mécaniques de jeu sur les moteurs temps réel les plus puissants du marché. Du prototype à la production finale.</p>
+          <ul class="service-card__list">
+            <li>Environnements temps réel</li>
+            <li>Modélisation de personnages</li>
+            <li>Intégration moteur</li>
+            <li>Shaders & Lighting</li>
+          </ul>
+          <div class="service-card__tools">
+            <span class="tool-tag">Unreal Engine</span>
+            <span class="tool-tag">Unity</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats__grid">
+        <div class="stat-item">
+          <span class="stat-item__number" data-target="120">0</span>
+          <span class="stat-item__suffix">+</span>
+          <p class="stat-item__label">Projets livrés</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__number" data-target="48">0</span>
+          <span class="stat-item__suffix">h</span>
+          <p class="stat-item__label">Délai moyen de livraison</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__number" data-target="3">0</span>
+          <span class="stat-item__suffix"></span>
+          <p class="stat-item__label">Pôles d'expertise</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__number" data-target="100">0</span>
+          <span class="stat-item__suffix">%</span>
+          <p class="stat-item__label">Clients satisfaits</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PORTFOLIO ============ -->
+  <section class="section portfolio" id="portfolio">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Nos réalisations</p>
+        <h2 class="section__title">Portfolio</h2>
+        <p class="section__desc">Chaque projet raconte une histoire. Explorez nos productions par catégorie.</p>
+      </div>
+
+      <div class="portfolio__filters">
+        <button class="filter-btn filter-btn--active" data-filter="all">Tous</button>
+        <button class="filter-btn" data-filter="2d">Infographie 2D</button>
+        <button class="filter-btn" data-filter="3d">3D & Immersif</button>
+        <button class="filter-btn" data-filter="game">Game Dev</button>
+      </div>
+
+      <div class="portfolio__grid" id="portfolioGrid">
+
+        <div class="portfolio-item" data-category="3d">
+          <div class="portfolio-item__image portfolio-item__image--1">
+            <div class="portfolio-item__overlay">
+              <span class="portfolio-item__cat">3D & Immersif</span>
+              <h3 class="portfolio-item__title">Rendu Produit Cosmétique</h3>
+              <p class="portfolio-item__subtitle">Product Marketing 3D — Blender Cycles</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-item" data-category="2d">
+          <div class="portfolio-item__image portfolio-item__image--2">
+            <div class="portfolio-item__overlay">
+              <span class="portfolio-item__cat">Infographie 2D</span>
+              <h3 class="portfolio-item__title">Identité Visuelle Startup Tech</h3>
+              <p class="portfolio-item__subtitle">Logo + Charte graphique — Illustrator</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-item portfolio-item--wide" data-category="game">
+          <div class="portfolio-item__image portfolio-item__image--3">
+            <div class="portfolio-item__overlay">
+              <span class="portfolio-item__cat">Game Dev</span>
+              <h3 class="portfolio-item__title">Environnement Fantasy Open World</h3>
+              <p class="portfolio-item__subtitle">Level Design & Lighting — Unreal Engine 5</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-item" data-category="3d">
+          <div class="portfolio-item__image portfolio-item__image--4">
+            <div class="portfolio-item__overlay">
+              <span class="portfolio-item__cat">3D & Immersif</span>
+              <h3 class="portfolio-item__title">Visualisation Architecturale</h3>
+              <p class="portfolio-item__subtitle">Pre-event 3D — Architecture moderne</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-item" data-category="2d">
+          <div class="portfolio-item__image portfolio-item__image--5">
+            <div class="portfolio-item__overlay">
+              <span class="portfolio-item__cat">Infographie 2D</span>
+              <h3 class="portfolio-item__title">Campagne Visuelle Événement</h3>
+              <p class="portfolio-item__subtitle">Affiche + Digital — Photoshop</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-item" data-category="game">
+          <div class="portfolio-item__image portfolio-item__image--6">
+            <div class="portfolio-item__overlay">
+              <span class="portfolio-item__cat">Game Dev</span>
+              <h3 class="portfolio-item__title">Character Modelling & Rig</h3>
+              <p class="portfolio-item__subtitle">3D Character — Blender + Unity</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section class="section process" id="process">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Notre méthode</p>
+        <h2 class="section__title">Du brief au rendu final,<br/>un workflow maîtrisé</h2>
+        <p class="section__desc">Transparence et rigueur à chaque étape. Voici comment nous transformons votre vision en production visuelle de haute performance.</p>
+      </div>
+
+      <div class="process__timeline">
+
+        <div class="process-step">
+          <div class="process-step__number">01</div>
+          <div class="process-step__connector"></div>
+          <div class="process-step__content">
+            <div class="process-step__icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M4 8h24M4 16h16M4 24h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="process-step__title">Brief & Découverte</h3>
+            <p class="process-step__desc">Nous analysons en profondeur vos besoins, votre secteur, et vos audiences cibles. Cette phase définit les fondations créatives du projet.</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-step__number">02</div>
+          <div class="process-step__connector"></div>
+          <div class="process-step__content">
+            <div class="process-step__icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M6 26L26 6M12 6H6v6M20 26h6v-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="process-step__title">Concept & Direction</h3>
+            <p class="process-step__desc">Moodboards, esquisses, et proposition de direction artistique. Vous validez le cap avant que nous plongions en production.</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-step__number">03</div>
+          <div class="process-step__connector"></div>
+          <div class="process-step__content">
+            <div class="process-step__icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M16 4L28 10v12L16 28 4 22V10L16 4Z" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="4" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3 class="process-step__title">Production</h3>
+            <p class="process-step__desc">C'est là que la magie opère. Blender, Unreal, Adobe Suite — nous produisons avec les outils les plus adaptés à votre projet, du cube initial à l'animation finale.</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-step__number">04</div>
+          <div class="process-step__connector"></div>
+          <div class="process-step__content">
+            <div class="process-step__icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M8 16l6 6 10-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3 class="process-step__title">Review & Itération</h3>
+            <p class="process-step__desc">Présentation des livrables intermédiaires. Vos retours sont intégrés rapidement grâce à notre workflow non-destructif et notre communication directe.</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-step__number">05</div>
+          <div class="process-step__content">
+            <div class="process-step__icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M8 16l-4 4 4 4M24 16l4 4-4 4M16 4v24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="process-step__title">Livraison & Déploiement</h3>
+            <p class="process-step__desc">Fichiers sources complets, exports optimisés pour chaque usage (web, print, temps réel). Accompagnement post-livraison inclus.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AUDIENCES ============ -->
+  <section class="section audiences">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Pour qui ?</p>
+        <h2 class="section__title">Nous parlons à ceux<br/>qui pensent grand</h2>
+      </div>
+      <div class="audiences__grid">
+        <div class="audience-card">
+          <div class="audience-card__icon">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 4L44 14v20L24 44 4 34V14L24 4Z" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>Entreprises & Startups</h3>
+          <p>Vous lancez un produit et avez besoin de visuels 3D qui captent l'attention avant même la production physique. Nous créons des assets marketing qui font la différence.</p>
+        </div>
+        <div class="audience-card">
+          <div class="audience-card__icon">
+            <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M16 24h16M24 16v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Agences Événementielles</h3>
+          <p>Projetez vos clients dans l'espace avant qu'il existe. Nos simulations 3D pré-événement réduisent les incertitudes et renforcent la confiance de vos prospects.</p>
+        </div>
+        <div class="audience-card">
+          <div class="audience-card__icon">
+            <svg viewBox="0 0 48 48" fill="none"><rect x="6" y="14" width="36" height="24" rx="4" stroke="currentColor" stroke-width="2"/><path d="M18 26l-4 4 4 4M30 26l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Studios & Tech</h3>
+          <p>Vous avez besoin d'une expertise technique pointue sur Unreal ou Unity. Nous apportons modélisation de qualité AAA et intégration moteur rigoureuse à vos projets.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="contact__inner">
+        <div class="contact__info">
+          <p class="section__eyebrow">Travaillons ensemble</p>
+          <h2 class="section__title">Prêt à donner vie<br/>à votre projet ?</h2>
+          <p class="contact__desc">Partagez votre vision. Nous répondons sous 24h avec une première estimation et nos disponibilités.</p>
+          <div class="contact__details">
+            <div class="contact__detail">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Z" stroke="currentColor" stroke-width="1.5"/><path d="m22 6-10 7L2 6" stroke="currentColor" stroke-width="1.5"/></svg>
+              <span>hello@shadow.studio</span>
+            </div>
+            <div class="contact__detail">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span>Réponse sous 24h</span>
+            </div>
+          </div>
+          <div class="contact__socials">
+            <a href="#" class="social-link" aria-label="Behance">Be</a>
+            <a href="#" class="social-link" aria-label="ArtStation">AS</a>
+            <a href="#" class="social-link" aria-label="Instagram">In</a>
+            <a href="#" class="social-link" aria-label="LinkedIn">Li</a>
+          </div>
+        </div>
+
+        <form class="contact__form" id="contactForm">
+          <div class="form-group">
+            <label for="name" class="form-label">Nom / Studio</label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Shadow Studio" required />
+          </div>
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="hello@votrestudio.com" required />
+          </div>
+          <div class="form-group">
+            <label for="service" class="form-label">Type de projet</label>
+            <select id="service" name="service" class="form-input form-select">
+              <option value="" disabled selected>Sélectionner un service</option>
+              <option value="2d">Infographie 2D</option>
+              <option value="3d">3D & Immersif</option>
+              <option value="game">Game Development</option>
+              <option value="multi">Projet multi-pôles</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message" class="form-label">Décrivez votre projet</label>
+            <textarea id="message" name="message" class="form-input form-textarea" placeholder="Parlez-nous de votre vision, vos contraintes, votre deadline..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--full">
+            Envoyer le brief
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="form-success" id="formSuccess">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="m8 12 3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Message envoyé ! Nous revenons vers vous sous 24h.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="#hero" class="nav__logo footer__logo">
+            <span class="nav__logo-shadow">S</span>HADOW
+          </a>
+          <p>Studio créatif hybride.<br/>Design × 3D × Game Dev.</p>
+        </div>
+        <div class="footer__links">
+          <div class="footer__col">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="#services">Infographie 2D</a></li>
+              <li><a href="#services">3D & Immersif</a></li>
+              <li><a href="#services">Game Development</a></li>
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h4>Studio</h4>
+            <ul>
+              <li><a href="#portfolio">Portfolio</a></li>
+              <li><a href="#process">Processus</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2025 Shadow Studio. Tous droits réservés.</p>
+        <p>Fait avec passion & Blender.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
