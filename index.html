@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<!--
+  DOCTYPE html = on dit au navigateur que c'est une page HTML5 (la version moderne)
+  Sans ça, le navigateur entre en "mode bizarrerie" et affiche mal les choses
+-->
+
+<html lang="fr">
+<!--
+  lang="fr" = on indique que la langue du site est le français
+  Utile pour les lecteurs d'écran (accessibilité) et le référencement Google
+-->
+
+<head>
+  <!--
+    La balise <head> contient tout ce que le visiteur NE VOIT PAS directement :
+    les paramètres techniques, les styles, les polices...
+  -->
+
+  <meta charset="UTF-8" />
+  <!-- UTF-8 = format d'encodage des caractères. Permet d'afficher les accents (é, à, ç...) -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--
+    viewport = zone visible sur l'écran
+    width=device-width = adapte la largeur à l'écran du visiteur (mobile, tablette, desktop)
+    initial-scale=1.0 = pas de zoom au chargement
+    Sans ça, le site serait tout petit sur mobile !
+  -->
+
+  <title>Shadow Studio — Design × 3D × Game Dev</title>
+  <!--
+    Le texte qui apparaît dans l'onglet du navigateur
+    ET dans les résultats Google (SEO important)
+  -->
+
+  <meta name="description" content="Shadow est un studio créatif hybride spécialisé dans la production visuelle de haute performance : identités visuelles, 3D immersif, et développement de jeux vidéo." />
+  <!--
+    Description qui apparaît sous le titre dans les résultats Google
+    Idéalement entre 150-160 caractères
+  -->
+
+  <!-- ── POLICES GOOGLE FONTS ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!--
+    preconnect = on "pré-connecte" au serveur Google Fonts AVANT de télécharger les polices
+    Ça accélère le chargement des polices
+  -->
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!--
+    On importe deux polices :
+    - Inter : police moderne et lisible, utilisée pour les textes courants
+    - Space Grotesk : police plus géométrique et design, pour les titres
+    Les chiffres (300;400...) représentent les "graisses" (épaisseurs) de la police
+  -->
+
+  <link rel="stylesheet" href="css/style.css" />
+  <!--
+    On charge notre fichier de styles CSS
+    C'est lui qui donne toutes les couleurs, tailles, espacements...
+    Le chemin "css/style.css" signifie : dans le dossier "css", le fichier "style.css"
+  -->
+
+</head>
+
+<body>
+<!--
+  La balise <body> contient tout ce que le visiteur VOIT sur la page.
+  Tout le contenu visible est ici.
+-->
+
+  <!-- ================================================
+       NAVIGATION — Barre de menu fixe en haut
+       ================================================ -->
+  <nav class="nav" id="nav">
+    <!--
+      <nav> = balise sémantique HTML5 pour la navigation
+      class="nav" = on lui donne une classe CSS pour le styliser
+      id="nav" = identifiant unique pour le cibler en JavaScript
+    -->
+
+    <div class="nav__container">
+      <!-- Conteneur interne qui limite la largeur et centre le contenu -->
+
+      <!-- LOGO -->
+      <a href="#hero" class="nav__logo">
+        <!--
+          href="#hero" = lien vers la section avec id="hero" sur la même page
+          Le # signifie "ancre interne" (pas une autre page, juste un endroit sur la page)
+        -->
+        <span class="nav__logo-shadow">S</span>HADOW
+        <!-- Le S est dans un <span> séparé pour lui donner une couleur violette -->
+      </a>
+
+      <!-- LIENS DU MENU -->
+      <ul class="nav__links">
+        <!-- <ul> = liste non ordonnée. Chaque <li> est un élément de la liste -->
+        <li><a href="#services" class="nav__link">Services</a></li>
+        <li><a href="#portfolio" class="nav__link">Portfolio</a></li>
+        <li><a href="#process" class="nav__link">Processus</a></li>
+        <li><a href="#contact" class="nav__link">Contact</a></li>
+      </ul>
+
+      <!-- BOUTON D'ACTION PRINCIPAL -->
+      <a href="#contact" class="btn btn--outline nav__cta">Démarrer un projet</a>
+      <!--
+        btn = classe de base du bouton
+        btn--outline = variante "contour" (transparent avec bordure)
+        La syntaxe "bloc__element--modificateur" s'appelle BEM (méthode d'organisation CSS)
+      -->
+
+      <!-- BOUTON HAMBURGER POUR MOBILE (les 3 traits) -->
+      <button class="nav__burger" id="navBurger" aria-label="Menu">
+        <!-- aria-label = texte pour les lecteurs d'écran (accessibilité) -->
+        <span></span>
+        <span></span>
+        <span></span>
+        <!-- Ces 3 <span> vides deviennent les 3 traits en CSS grâce à background-color -->
+      </button>
+
+    </div>
+  </nav>
+
+
+  <!-- ================================================
+       HERO — Section d'accueil plein écran
+       ================================================ -->
+  <section class="hero" id="hero">
+    <!--
+      <section> = balise sémantique pour une grande section de contenu
+      id="hero" = permet d'y naviguer via href="#hero"
+    -->
+
+    <canvas id="heroCanvas"></canvas>
+    <!--
+      <canvas> = zone de dessin HTML5
+      JavaScript (Three.js) va dessiner l'animation 3D dedans
+      Sans JS, ce canvas est invisible (juste une zone vide)
+    -->
+
+    <!-- CONTENU TEXTUEL DU HERO -->
+    <div class="hero__content">
+
+      <p class="hero__eyebrow">Studio Créatif Hybride</p>
+      <!-- Petit texte au-dessus du titre principal, comme un sous-titre discret -->
+
+      <h1 class="hero__title">
+        <!-- <h1> = titre principal de la page. Il ne doit y en avoir qu'UN seul par page (SEO) -->
+        <span class="hero__title-main">SHADOW</span>
+        <!-- Le nom du studio en très grand avec effet dégradé -->
+        <span class="hero__title-sub">Design. 3D. Game.</span>
+        <!-- Sous-titre avec les 3 spécialités -->
+      </h1>
+
+      <p class="hero__desc">
+        Nous bridgeons l'écart entre le design traditionnel et les technologies immersives. De l'identité visuelle au rendu 3D ultra-réaliste, jusqu'aux environnements temps réel.
+      </p>
+
+      <!-- BOUTONS D'APPEL À L'ACTION -->
+      <div class="hero__actions">
+        <a href="#portfolio" class="btn btn--primary">Voir le Portfolio</a>
+        <!-- btn--primary = bouton violet rempli, le plus important visuellement -->
+        <a href="#services" class="btn btn--ghost">Explorer nos services</a>
+        <!-- btn--ghost = bouton transparent avec bordure discrète -->
+      </div>
+
+    </div>
+
+    <!-- INDICATEUR DE SCROLL (petite flèche animée en bas) -->
+    <div class="hero__scroll-hint">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+      <!-- La ligne qui pulse vers le bas pour inviter à scroller -->
+    </div>
+
+  </section>
+
+
+  <!-- ================================================
+       SERVICES — Les 3 pôles d'activité
+       ================================================ -->
+  <section class="section services" id="services">
+    <div class="container">
+      <!--
+        "container" = classe utilitaire qui limite la largeur à 1220px
+        et centre le contenu horizontalement avec margin: auto
+      -->
+
+      <!-- EN-TÊTE DE SECTION -->
+      <div class="section__header">
+        <p class="section__eyebrow">Ce que nous faisons</p>
+        <h2 class="section__title">Deux pôles d'expertise,<br/>une vision unifiée</h2>
+        <!-- <br/> = retour à la ligne forcé dans le titre -->
+        <p class="section__desc">Chaque projet est une production visuelle de haute performance, conçue pour marquer les esprits de vos audiences.</p>
+      </div>
+
+      <!-- GRILLE DES 3 CARTES DE SERVICES -->
+      <div class="services__grid">
+        <!-- CSS Grid va placer ces 3 cartes côte à côte sur desktop -->
+
+
+        <!-- ── CARTE 1 : INFOGRAPHIE 2D ── -->
+        <div class="service-card service-card--2d" data-index="01">
+          <!--
+            service-card = styles communs à toutes les cartes
+            service-card--2d = styles spécifiques au pôle 2D (couleur bleue)
+            data-index = attribut personnalisé, on peut stocker des données dessus
+          -->
+
+          <div class="service-card__glow"></div>
+          <!-- Cercle flou coloré qui apparaît au survol (effet lumineux) -->
+
+          <!-- ICÔNE SVG -->
+          <div class="service-card__icon">
+            <!--
+              SVG = format d'image vectoriel (ne pixelise jamais)
+              viewBox définit la zone de dessin
+              Les <rect>, <circle>, <path> sont les formes dessinées
+            -->
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2"/>
+              <path d="M8 24H16M32 24H40M24 8V16M24 32V40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <div class="service-card__badge">Pôle 01</div>
+          <h3 class="service-card__title">Infographie 2D</h3>
+          <p class="service-card__desc">Création d'identités visuelles percutantes, logos, et supports de communication. Chaque élément est pensé pour une cohérence de marque maximale.</p>
+
+          <!-- LISTE DES PRESTATIONS -->
+          <ul class="service-card__list">
+            <li>Identité visuelle & Branding</li>
+            <li>Logo Design</li>
+            <li>Supports de communication</li>
+            <li>Charte graphique</li>
+          </ul>
+
+          <!-- TAGS DES OUTILS UTILISÉS -->
+          <div class="service-card__tools">
+            <span class="tool-tag">Photoshop</span>
+            <span class="tool-tag">Illustrator</span>
+          </div>
+        </div>
+
+
+        <!-- ── CARTE 2 : 3D & IMMERSIF (mise en avant) ── -->
+        <div class="service-card service-card--3d service-card--featured" data-index="02">
+          <!-- service-card--featured = cette carte est plus grande et plus lumineuse -->
+
+          <div class="service-card__glow"></div>
+
+          <div class="service-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Forme hexagonale = symbolise la 3D / géométrie -->
+              <path d="M24 4L44 16V32L24 44L4 32V16L24 4Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M24 4V44M4 16L44 16M4 32L44 32" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+              <circle cx="24" cy="24" r="3" fill="currentColor"/>
+            </svg>
+          </div>
+
+          <div class="service-card__badge service-card__badge--accent">Pôle 02</div>
+          <h3 class="service-card__title">3D & Immersif</h3>
+          <p class="service-card__desc">Modélisation, animation et rendu de haute fidélité. Du produit pour la publicité à la visualisation architecturale, nous donnons vie à vos projets avant leur existence physique.</p>
+
+          <ul class="service-card__list">
+            <li>Product Marketing 3D</li>
+            <li>Visualisation architecturale</li>
+            <li>Animation & VFX</li>
+            <li>Pre-event 3D</li>
+          </ul>
+
+          <div class="service-card__tools">
+            <span class="tool-tag">Blender</span>
+            <span class="tool-tag">Cycles</span>
+            <span class="tool-tag">EEVEE</span>
+          </div>
+        </div>
+
+
+        <!-- ── CARTE 3 : GAME DEVELOPMENT ── -->
+        <div class="service-card service-card--game" data-index="03">
+          <div class="service-card__glow"></div>
+
+          <div class="service-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Forme d'une manette de jeu stylisée -->
+              <rect x="4" y="12" width="40" height="28" rx="6" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 26H24M20 22V30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="32" cy="24" r="2" fill="currentColor"/>
+              <circle cx="28" cy="28" r="2" fill="currentColor"/>
+              <path d="M18 8H30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <div class="service-card__badge">Pôle 03</div>
+          <h3 class="service-card__title">Game Development</h3>
+          <p class="service-card__desc">Conception d'environnements immersifs et de mécaniques de jeu sur les moteurs temps réel les plus puissants du marché. Du prototype à la production finale.</p>
+
+          <ul class="service-card__list">
+            <li>Environnements temps réel</li>
+            <li>Modélisation de personnages</li>
+            <li>Intégration moteur</li>
+            <li>Shaders & Lighting</li>
+          </ul>
+
+          <div class="service-card__tools">
+            <span class="tool-tag">Unreal Engine</span>
+            <span class="tool-tag">Unity</span>
+          </div>
+        </div>
+
+      </div><!-- fin services__grid -->
+    </div><!-- fin container -->
+  </section>
+
+
+  <!-- ================================================
+       STATS — Chiffres clés animés
+       ================================================ -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats__grid">
+
+        <!-- Chaque stat-item a un data-target = la valeur finale du compteur -->
+        <!-- JavaScript va animer le chiffre de 0 jusqu'à cette valeur -->
+
+        <div class="stat-item">
+          <span class="stat-item__number" data-target="120">0</span>
+          <span class="stat-item__suffix">+</span>
+          <p class="stat-item__label">Projets livrés</p>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-item__number" data-target="48">0</span>
+          <span class="stat-item__suffix">h</span>
+          <p class="stat-item__label">Délai moyen de livraison</p>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-item__number" data-target="3">0</span>
+          <span class="stat-item__suffix"></span>
+          <p class="stat-item__label">Pôles d'expertise</p>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-item__number" data-target="100">0</span>
+          <span class="stat-item__suffix">%</span>
+          <p class="stat-item__label">Clients satisfaits</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       PORTFOLIO — Grille de projets avec filtres
+       ================================================ -->
+  <section class="section portfolio" id="portfolio">
+    <div class="container">
+
+      <div class="section__header">
+        <p class="section__eyebrow">Nos réalisations</p>
+        <h2 class="section__title">Portfolio</h2>
+        <p class="section__desc">Chaque projet raconte une histoire. Explorez nos productions par catégorie.</p>
+      </div>
+
+      <!-- BOUTONS DE FILTRE -->
+      <div class="portfolio__filters">
+        <!--
+          data-filter = valeur utilisée par le JavaScript pour filtrer
+          "all" = affiche tout
+          "2d", "3d", "game" = filtre par catégorie
+        -->
+        <button class="filter-btn filter-btn--active" data-filter="all">Tous</button>
+        <button class="filter-btn" data-filter="2d">Infographie 2D</button>
+        <button class="filter-btn" data-filter="3d">3D & Immersif</button>
+        <button class="filter-btn" data-filter="game">Game Dev</button>
+      </div>
+
+      <!-- GRILLE DES PROJETS -->
+      <div class="portfolio__grid" id="portfolioGrid">
+        <!--
+          Chaque portfolio-item a data-category qui doit correspondre
+          aux valeurs des data-filter des boutons ci-dessus
+        -->
+
+        <!-- Projet 1 — 3D -->
+        <div class="portfolio-item" data-category="3d">
+          <div class="portfolio-item__image portfolio-item__image--1">
+            <!-- portfolio-item__image--1 = dégradé de couleur CSS (à remplacer par vraie image) -->
+            <div class="portfolio-item__overlay">
+              <!-- L'overlay apparaît au survol avec les infos du projet -->
+              <span class="portfolio-item__cat">3D & Immersif</span>
+              <h3 class="portfolio-item__title">Rendu Produit Cosmétique</h3>
+              <p class="portfolio-item__subtitle">Product Marketing 3D — Blender Cycles</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projet 2 — 2D -->
+        <div class="portfolio-item" data-category="2d">
+          <div class="portfolio-item__image portfolio-item__image--2">
+            <div class="portfolio-item__overlay">
+              <span class="portfolio-item__cat">Infographie 2D</span>
+              <h3 class="portfolio-item__title">Identité Visuelle Startup Tech</h3>
+              <p class="portfolio-item__subtitle">Logo + Charte graphique — Illustrator</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projet 3 — Game Dev (large sur 2 colonnes) -->
+        <div class="portfolio-item portfolio-item--wide" data-category="game">
+          <!-- portfolio-item--wide = ce projet prend 2 colonnes dans la grille CSS -->
+          <div class="portfolio-item__image portfolio-item__image--3">
+            <div class="portfolio-item__overlay">
+              <span class="portfolio-item__cat">Game Dev</span>
+              <h3 class="portfolio-item__title">Environnement Fantasy Open World</h3>
+              <p class="portfolio-item__subtitle">Level Design & Lighting — Unreal Engine 5</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projet 4 — 3D -->
+        <div class="portfolio-item" data-category="3d">
+          <div class="portfolio-item__image portfolio-item__image--4">
+            <div class="portfolio-item__overlay">
+              <span class="portfolio-item__cat">3D & Immersif</span>
+              <h3 class="portfolio-item__title">Visualisation Architecturale</h3>
+              <p class="portfolio-item__subtitle">Pre-event 3D — Architecture moderne</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projet 5 — 2D -->
+        <div class="portfolio-item" data-category="2d">
+          <div class="portfolio-item__image portfolio-item__image--5">
+            <div class="portfolio-item__overlay">
+              <span class="portfolio-item__cat">Infographie 2D</span>
+              <h3 class="portfolio-item__title">Campagne Visuelle Événement</h3>
+              <p class="portfolio-item__subtitle">Affiche + Digital — Photoshop</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projet 6 — Game Dev -->
+        <div class="portfolio-item" data-category="game">
+          <div class="portfolio-item__image portfolio-item__image--6">
+            <div class="portfolio-item__overlay">
+              <span class="portfolio-item__cat">Game Dev</span>
+              <h3 class="portfolio-item__title">Character Modelling & Rig</h3>
+              <p class="portfolio-item__subtitle">3D Character — Blender + Unity</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- fin portfolio__grid -->
+    </div><!-- fin container -->
+  </section>
+
+
+  <!-- ================================================
+       PROCESSUS — Timeline des 5 étapes de travail
+       ================================================ -->
+  <section class="section process" id="process">
+    <div class="container">
+
+      <div class="section__header">
+        <p class="section__eyebrow">Notre méthode</p>
+        <h2 class="section__title">Du brief au rendu final,<br/>un workflow maîtrisé</h2>
+        <p class="section__desc">Transparence et rigueur à chaque étape. Voici comment nous transformons votre vision en production visuelle de haute performance.</p>
+      </div>
+
+      <!-- TIMELINE VERTICALE -->
+      <div class="process__timeline">
+        <!--
+          Chaque étape est composée de :
+          - Un numéro (cercle)
+          - Une ligne verticale de connexion (sauf pour la dernière)
+          - Le contenu (icône + titre + description)
+          CSS Grid s'occupe de l'alignement
+        -->
+
+        <!-- ÉTAPE 1 -->
+        <div class="process-step">
+          <div class="process-step__number">01</div>
+          <div class="process-step__connector"></div>
+          <!-- La ligne qui relie les étapes entre elles -->
+          <div class="process-step__content">
+            <div class="process-step__icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M4 8h24M4 16h16M4 24h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="process-step__title">Brief & Découverte</h3>
+            <p class="process-step__desc">Nous analysons en profondeur vos besoins, votre secteur, et vos audiences cibles. Cette phase définit les fondations créatives du projet.</p>
+          </div>
+        </div>
+
+        <!-- ÉTAPE 2 -->
+        <div class="process-step">
+          <div class="process-step__number">02</div>
+          <div class="process-step__connector"></div>
+          <div class="process-step__content">
+            <div class="process-step__icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M6 26L26 6M12 6H6v6M20 26h6v-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="process-step__title">Concept & Direction</h3>
+            <p class="process-step__desc">Moodboards, esquisses, et proposition de direction artistique. Vous validez le cap avant que nous plongions en production.</p>
+          </div>
+        </div>
+
+        <!-- ÉTAPE 3 -->
+        <div class="process-step">
+          <div class="process-step__number">03</div>
+          <div class="process-step__connector"></div>
+          <div class="process-step__content">
+            <div class="process-step__icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M16 4L28 10v12L16 28 4 22V10L16 4Z" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="4" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3 class="process-step__title">Production</h3>
+            <p class="process-step__desc">C'est là que la magie opère. Blender, Unreal, Adobe Suite — nous produisons avec les outils les plus adaptés à votre projet, du cube initial à l'animation finale.</p>
+          </div>
+        </div>
+
+        <!-- ÉTAPE 4 -->
+        <div class="process-step">
+          <div class="process-step__number">04</div>
+          <div class="process-step__connector"></div>
+          <div class="process-step__content">
+            <div class="process-step__icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M8 16l6 6 10-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3 class="process-step__title">Review & Itération</h3>
+            <p class="process-step__desc">Présentation des livrables intermédiaires. Vos retours sont intégrés rapidement grâce à notre workflow non-destructif et notre communication directe.</p>
+          </div>
+        </div>
+
+        <!-- ÉTAPE 5 (dernière = pas de connecteur) -->
+        <div class="process-step">
+          <div class="process-step__number">05</div>
+          <!-- Pas de process-step__connector ici : c'est la dernière étape -->
+          <div class="process-step__content">
+            <div class="process-step__icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M8 16l-4 4 4 4M24 16l4 4-4 4M16 4v24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="process-step__title">Livraison & Déploiement</h3>
+            <p class="process-step__desc">Fichiers sources complets, exports optimisés pour chaque usage (web, print, temps réel). Accompagnement post-livraison inclus.</p>
+          </div>
+        </div>
+
+      </div><!-- fin process__timeline -->
+    </div><!-- fin container -->
+  </section>
+
+
+  <!-- ================================================
+       AUDIENCES — Pour qui travaillons-nous ?
+       ================================================ -->
+  <section class="section audiences">
+    <div class="container">
+
+      <div class="section__header">
+        <p class="section__eyebrow">Pour qui ?</p>
+        <h2 class="section__title">Nous parlons à ceux<br/>qui pensent grand</h2>
+      </div>
+
+      <div class="audiences__grid">
+        <!-- 3 cartes décrivant les 3 types de clients cibles -->
+
+        <div class="audience-card">
+          <div class="audience-card__icon">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 4L44 14v20L24 44 4 34V14L24 4Z" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>Entreprises & Startups</h3>
+          <p>Vous lancez un produit et avez besoin de visuels 3D qui captent l'attention avant même la production physique. Nous créons des assets marketing qui font la différence.</p>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-card__icon">
+            <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M16 24h16M24 16v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Agences Événementielles</h3>
+          <p>Projetez vos clients dans l'espace avant qu'il existe. Nos simulations 3D pré-événement réduisent les incertitudes et renforcent la confiance de vos prospects.</p>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-card__icon">
+            <svg viewBox="0 0 48 48" fill="none"><rect x="6" y="14" width="36" height="24" rx="4" stroke="currentColor" stroke-width="2"/><path d="M18 26l-4 4 4 4M30 26l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Studios & Tech</h3>
+          <p>Vous avez besoin d'une expertise technique pointue sur Unreal ou Unity. Nous apportons modélisation de qualité AAA et intégration moteur rigoureuse à vos projets.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       CONTACT — Formulaire de prise de contact
+       ================================================ -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="contact__inner">
+        <!-- Deux colonnes : infos à gauche, formulaire à droite -->
+
+        <!-- ── COLONNE GAUCHE : Infos de contact ── -->
+        <div class="contact__info">
+          <p class="section__eyebrow">Travaillons ensemble</p>
+          <h2 class="section__title">Prêt à donner vie<br/>à votre projet ?</h2>
+          <p class="contact__desc">Partagez votre vision. Nous répondons sous 24h avec une première estimation et nos disponibilités.</p>
+
+          <!-- Détails de contact (email, délai de réponse) -->
+          <div class="contact__details">
+            <div class="contact__detail">
+              <!-- Icône email SVG -->
+              <svg viewBox="0 0 24 24" fill="none"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Z" stroke="currentColor" stroke-width="1.5"/><path d="m22 6-10 7L2 6" stroke="currentColor" stroke-width="1.5"/></svg>
+              <span>hello@shadow.studio</span>
+              <!-- ⚠️ À REMPLACER par ton vrai email -->
+            </div>
+            <div class="contact__detail">
+              <!-- Icône horloge SVG -->
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span>Réponse sous 24h</span>
+            </div>
+          </div>
+
+          <!-- Liens vers les réseaux sociaux -->
+          <div class="contact__socials">
+            <!-- ⚠️ Remplace href="#" par tes vraies URLs de profils -->
+            <a href="#" class="social-link" aria-label="Behance">Be</a>
+            <a href="#" class="social-link" aria-label="ArtStation">AS</a>
+            <a href="#" class="social-link" aria-label="Instagram">In</a>
+            <a href="#" class="social-link" aria-label="LinkedIn">Li</a>
+          </div>
+        </div>
+
+        <!-- ── COLONNE DROITE : Formulaire ── -->
+        <form class="contact__form" id="contactForm">
+          <!--
+            action et method non définis = formulaire géré par JavaScript (pas de rechargement de page)
+            Pour un vrai envoi d'email, il faudra brancher un service (Formspree, EmailJS...)
+          -->
+
+          <!-- Champ Nom -->
+          <div class="form-group">
+            <label for="name" class="form-label">Nom / Studio</label>
+            <!-- for="name" lie le label à l'input id="name" → clic sur le label = focus sur l'input -->
+            <input type="text" id="name" name="name" class="form-input" placeholder="Shadow Studio" required />
+            <!-- required = le navigateur bloque l'envoi si ce champ est vide -->
+          </div>
+
+          <!-- Champ Email -->
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="hello@votrestudio.com" required />
+            <!-- type="email" = le navigateur vérifie automatiquement le format xxx@xxx.xx -->
+          </div>
+
+          <!-- Menu déroulant : type de projet -->
+          <div class="form-group">
+            <label for="service" class="form-label">Type de projet</label>
+            <select id="service" name="service" class="form-input form-select">
+              <option value="" disabled selected>Sélectionner un service</option>
+              <!-- disabled selected = option affichée par défaut mais non sélectionnable -->
+              <option value="2d">Infographie 2D</option>
+              <option value="3d">3D & Immersif</option>
+              <option value="game">Game Development</option>
+              <option value="multi">Projet multi-pôles</option>
+            </select>
+          </div>
+
+          <!-- Zone de texte libre -->
+          <div class="form-group">
+            <label for="message" class="form-label">Décrivez votre projet</label>
+            <textarea id="message" name="message" class="form-input form-textarea" placeholder="Parlez-nous de votre vision, vos contraintes, votre deadline..." required></textarea>
+            <!-- <textarea> = zone de texte multiligne, contrairement à <input> -->
+          </div>
+
+          <!-- Bouton d'envoi -->
+          <button type="submit" class="btn btn--primary btn--full">
+            Envoyer le brief
+            <!-- Icône flèche droite -->
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <!-- Message de succès (caché par défaut, visible après envoi) -->
+          <div class="form-success" id="formSuccess">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="m8 12 3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Message envoyé ! Nous revenons vers vous sous 24h.
+          </div>
+
+        </form>
+
+      </div><!-- fin contact__inner -->
+    </div><!-- fin container -->
+  </section>
+
+
+  <!-- ================================================
+       FOOTER — Pied de page
+       ================================================ -->
+  <footer class="footer">
+    <div class="container">
+
+      <div class="footer__top">
+        <!-- Logo + phrase d'accroche -->
+        <div class="footer__brand">
+          <a href="#hero" class="nav__logo footer__logo">
+            <span class="nav__logo-shadow">S</span>HADOW
+          </a>
+          <p>Studio créatif hybride.<br/>Design × 3D × Game Dev.</p>
+        </div>
+
+        <!-- Colonnes de liens -->
+        <div class="footer__links">
+          <div class="footer__col">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="#services">Infographie 2D</a></li>
+              <li><a href="#services">3D & Immersif</a></li>
+              <li><a href="#services">Game Development</a></li>
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h4>Studio</h4>
+            <ul>
+              <li><a href="#portfolio">Portfolio</a></li>
+              <li><a href="#process">Processus</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barre du bas : copyright -->
+      <div class="footer__bottom">
+        <p>&copy; 2025 Shadow Studio. Tous droits réservés.</p>
+        <!-- &copy; = le symbole © en HTML -->
+        <p>Fait avec passion & Blender.</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ================================================
+       SCRIPTS JAVASCRIPT
+       Chargés à la FIN du body pour ne pas ralentir l'affichage
+       ================================================ -->
+
+  <!-- Three.js : bibliothèque 3D chargée depuis un CDN (serveur externe) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- CDN = Content Delivery Network, un serveur rapide qui héberge des bibliothèques -->
+
+  <!-- Notre propre fichier JavaScript (chargé APRÈS Three.js car il en a besoin) -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>
