@@ -53,6 +53,14 @@ STEM_BROWN   = ( 90,  55,  15)   # Tige de la pomme
 LEAF_GREEN   = ( 55, 175,  40)   # Feuille de la pomme
 SCORE_COLOR  = (190, 225, 190)   # Texte du score
 WHITE        = (255, 255, 255)   # Blanc pur (texte game over)
+OBS_COLOR    = ( 90,  70,  45)   # Corps des obstacles (marron pierre)
+OBS_LIGHT    = (125, 100,  65)   # Reflet clair en haut à gauche
+OBS_DARK     = ( 50,  38,  22)   # Ombre en bas à droite
+
+# Règles d'apparition des obstacles
+OBSTACLES_START = 10   # Nombre de pommes avant les premiers obstacles
+OBSTACLES_STEP  =  5   # Un nouvel obstacle tous les X pommes après le départ
+OBSTACLES_MAX   = 20   # Plafond d'obstacles simultanés
 
 # ============================================================
 #  GESTION DU MEILLEUR SCORE  (lecture / écriture fichier JSON)
@@ -292,18 +300,59 @@ def draw_game_over(surface, font_big, font_small, score, high_score):
     surface.blit(r_text, (cx - r_text.get_width() // 2, cy + 45))
 
 # ============================================================
-#  GÉNÉRATION DE LA NOURRITURE
+#  DESSIN DES OBSTACLES
 # ============================================================
 
-def spawn_food(snake):
+def draw_obstacles(surface, obstacles):
     """
-    Choisit une position aléatoire sur la grille qui n'est
-    pas déjà occupée par un segment du serpent.
+    Dessine chaque obstacle comme un bloc rocheux marron avec :
+      - Un corps principal
+      - Un reflet clair en haut à gauche (effet 3D)
+      - Une ombre foncée en bas à droite (effet 3D)
     """
+    for (col, row) in obstacles:
+        cx, cy = cell_to_px(col, row)
+        r = CELL // 2 - 1
+        rect = pygame.Rect(cx - r, cy - r, r * 2, r * 2)
+
+        # Corps du bloc
+        pygame.draw.rect(surface, OBS_COLOR, rect, border_radius=4)
+
+        # Reflet en haut à gauche
+        pygame.draw.line(surface, OBS_LIGHT, (cx - r + 2, cy - r + 2), (cx + r - 2, cy - r + 2), 2)
+        pygame.draw.line(surface, OBS_LIGHT, (cx - r + 2, cy - r + 2), (cx - r + 2, cy + r - 2), 2)
+
+        # Ombre en bas à droite
+        pygame.draw.line(surface, OBS_DARK, (cx - r + 2, cy + r - 1), (cx + r - 1, cy + r - 1), 2)
+        pygame.draw.line(surface, OBS_DARK, (cx + r - 1, cy - r + 2), (cx + r - 1, cy + r - 1), 2)
+
+# ============================================================
+#  GÉNÉRATION DE LA NOURRITURE ET DES OBSTACLES
+# ============================================================
+
+def spawn_food(snake, obstacles=None):
+    """
+    Choisit une position aléatoire non occupée par le serpent
+    ni par un obstacle.
+    """
+    blocked = set(snake) | set(obstacles or [])
     while True:
         pos = (random.randint(0, COLS - 1), random.randint(0, ROWS - 1))
-        if pos not in snake:
+        if pos not in blocked:
             return pos
+
+def spawn_obstacle(snake, food, obstacles):
+    """
+    Génère un obstacle à une position aléatoire libre,
+    loin du serpent et de la nourriture.
+    Retourne None si aucune place n'est disponible après 200 essais.
+    """
+    blocked = set(snake) | set(obstacles) | {food}
+    for _ in range(200):
+        pos = (random.randint(1, COLS - 2), random.randint(1, ROWS - 2))
+        if pos not in blocked:
+            return pos
+    return None
 
 # ============================================================
 #  BOUCLE PRINCIPALE
@@ -325,16 +374,18 @@ def main():
     while True:
 
         # Initialisation d'une nouvelle partie
-        snake     = [(COLS // 2, ROWS // 2),
-                     (COLS // 2 - 1, ROWS // 2),
-                     (COLS // 2 - 2, ROWS // 2)]
-        direction = RIGHT       # Le serpent part vers la droite
-        next_dir  = RIGHT       # Direction choisie par le joueur (appliquée au prochain tick)
-        food      = spawn_food(snake)
-        score     = 0
-        fps       = FPS_INIT
-        anim_tick = 0           # Compteur global pour les animations
-        game_over = False
+        snake        = [(COLS // 2, ROWS // 2),
+                        (COLS // 2 - 1, ROWS // 2),
+                        (COLS // 2 - 2, ROWS // 2)]
+        direction    = RIGHT
+        next_dir     = RIGHT
+        obstacles    = []    # Liste des positions des blocs obstacles
+        apples_eaten = 0     # Compte les pommes avalées (déclenche les obstacles)
+        food         = spawn_food(snake, obstacles)
+        score        = 0
+        fps          = FPS_INIT
+        anim_tick    = 0
+        game_over    = False
 
         # ---- Boucle d'une partie ----
         while not game_over:
@@ -360,12 +411,24 @@ def main():
             direction = next_dir
 
             # -- Calcul de la nouvelle position de la tête --
-            hx, hy   = snake[0]
-            dx, dy   = direction
-            new_head = ((hx + dx) % COLS, (hy + dy) % ROWS)  # Traverse les murs
+            hx, hy = snake[0]
+            dx, dy = direction
+            nx, ny = hx + dx, hy + dy
 
-            # -- Détection de collision avec soi-même --
+            # -- Collision avec les murs : toucher le bord = game over --
+            if nx < 0 or nx >= COLS or ny < 0 or ny >= ROWS:
+                game_over = True
+                continue
+
+            new_head = (nx, ny)
+
+            # -- Collision avec soi-même --
             if new_head in snake:
+                game_over = True
+                continue
+
+            # -- Collision avec un obstacle --
+            if new_head in obstacles:
                 game_over = True
                 continue
 
@@ -374,17 +437,35 @@ def main():
 
             # -- Vérification si la tête est sur la pomme --
             if new_head == food:
-                score += 10
+                score        += 10
+                apples_eaten += 1
+
                 if score > high_score:
                     high_score = score
                     save_high_score(high_score)
-                food = spawn_food(snake)                    # Nouvelle pomme
-                fps  = min(FPS_MAX, FPS_INIT + score // 40) # Accélération progressive
+
+                food = spawn_food(snake, obstacles)
+
+                # Vitesse : +1 case/s toutes les 2 pommes mangées
+                fps = min(FPS_MAX, FPS_INIT + apples_eaten // 2)
+
+                # Obstacles : 2 blocs à la 10ème pomme, puis +1 tous les 5
+                if apples_eaten == OBSTACLES_START:
+                    for _ in range(2):
+                        obs = spawn_obstacle(snake, food, obstacles)
+                        if obs:
+                            obstacles.append(obs)
+                elif apples_eaten > OBSTACLES_START and len(obstacles) < OBSTACLES_MAX:
+                    if (apples_eaten - OBSTACLES_START) % OBSTACLES_STEP == 0:
+                        obs = spawn_obstacle(snake, food, obstacles)
+                        if obs:
+                            obstacles.append(obs)
             else:
                 snake.pop()   # On retire la queue seulement si aucune pomme mangée
 
             # -- Rendu graphique --
             draw_background(screen)
+            draw_obstacles(screen, obstacles)
             draw_apple(screen, *food)
             draw_snake(screen, snake, direction, anim_tick)
             draw_score(screen, font_small, score, high_score)
