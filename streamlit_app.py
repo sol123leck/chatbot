@@ -1,14 +1,14 @@
 import streamlit as st
-import anthropic
+from groq import Groq
 
 st.title("💬 Shadow Studio — Assistant IA")
-st.write("Posez vos questions à notre assistant. Vous aurez besoin d'une clé API Anthropic (claude.ai/api).")
+st.write("Assistant alimenté par Groq (gratuit). Obtenez votre clé sur console.groq.com")
 
-api_key = st.text_input("Clé API Anthropic", type="password")
+api_key = st.text_input("Clé API Groq", type="password")
 if not api_key:
-    st.info("Entrez votre clé API Anthropic pour commencer.", icon="🗝️")
+    st.info("Entrez votre clé API Groq pour commencer.", icon="🗝️")
 else:
-    client = anthropic.Anthropic(api_key=api_key)
+    client = Groq(api_key=api_key)
 
     if "messages" not in st.session_state:
         st.session_state.messages = []
@@ -23,11 +23,15 @@ else:
             st.markdown(prompt)
 
         with st.chat_message("assistant"):
-            with client.messages.stream(
-                model="claude-haiku-4-5-20251001",
-                max_tokens=1024,
+            stream = client.chat.completions.create(
+                model="llama3-8b-8192",
                 messages=st.session_state.messages,
-            ) as stream:
-                response = st.write_stream(stream.text_stream)
+                stream=True,
+            )
+            response = st.write_stream(
+                chunk.choices[0].delta.content or ""
+                for chunk in stream
+                if chunk.choices[0].delta.content
+            )
 
         st.session_state.messages.append({"role": "assistant", "content": response})
